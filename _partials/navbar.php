@@ -10,8 +10,14 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="index.php?component=users">Liste des utilisateurs</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Liste des points de vente</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Liste des restaurants
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="index.php?component=restaurants&type=list">Liste</a></li>
+                        <li><a class="dropdown-item" href="index.php?component=restaurants&type=map">Vue carte</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
