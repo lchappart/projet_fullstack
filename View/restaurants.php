@@ -116,7 +116,7 @@
 
         lastPageBtn.addEventListener('click', async (e) => {
             e.preventDefault()
-            currentPage = Math.ceil(totalUsers[0] / 15)
+            currentPage = Math.ceil(totalRestaurants[0] / 15)
             tableBody.innerHTML = ''
             currentPageElement.innerHTML = currentPage
             const data = await getRestaurants(currentPage)
