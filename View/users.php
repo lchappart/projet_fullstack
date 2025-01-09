@@ -109,6 +109,7 @@
         firstPageBtn.addEventListener('click',  (e) => {
             e.preventDefault()
             currentPage = 1
+            currentPageElement.innerHTML = currentPage
             tableBody.innerHTML = ''
             fillTableUsers(data, tableBody, currentPage)
         })
@@ -117,6 +118,7 @@
             e.preventDefault()
             currentPage = Math.ceil(totalUsers[0] / 15)
             tableBody.innerHTML = ''
+            currentPageElement.innerHTML = currentPage
             const data = await getUsers(currentPage)
             fillTableUsers(data, tableBody)
         })
