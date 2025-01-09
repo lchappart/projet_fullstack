@@ -1,20 +1,26 @@
 <div id="error">
 
 </div>
-<form id="login-form">
-    <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" aria-describedby="emailHelp" required>
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="row justify-content-center w-100">
+        <div class="col-3">
+            <form id="login-form">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="emailHelp" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="button" id="login-btn" class="btn btn-primary">Soumettre</button>
+            </form>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" required>
-    </div>
-    <button type="button" id="login-btn" class="btn btn-primary">Soumettre</button>
-</form>
+</div>
 <script type="module" src="Assets/services/login.js"></script>
 <script type="module">
-    import {login} from "./Assets/services/login.js";
+    import {login} from "./Assets/JS/services/login.js";
     document.addEventListener("DOMContentLoaded",  () => {
         const form = document.querySelector("#login-form")
         const loginButton = document.querySelector("#login-btn")
