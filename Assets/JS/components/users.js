@@ -1,6 +1,6 @@
 export const fillTableUsers = (data, tableBody) => {
     tableBody.innerHTML = ''
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < data.length; i++) {
         const tr = document.createElement('tr')
         tr.innerHTML = `
                     <td>${data[i].id}</td>
@@ -12,10 +12,10 @@ export const fillTableUsers = (data, tableBody) => {
                             >
                             <i class="fa-solid fa-trash text-danger delete-icon" 
                             data-id="${data[i].id}"
-                            onabort="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')"
+                            onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')"
                             ></i>
                         </a>
-                        <a href="index.php?component=users&action=edit&id=${data[i].id}">
+                        <a href="index.php?component=user&action=edit&id=${data[i].id}">
                             <i class="fa-solid fa-pen ms-3"></i>
                         </a>
                     </td>
