@@ -17,7 +17,7 @@ export const fillTableRestaurants = (data, tableBody) => {
                             onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')"
                             ></i>
                         </a>
-                        <a href="index.php?component=user&action=edit&id=${data[i].id}">
+                        <a href="index.php?component=restaurant&action=edit&id=${data[i].id}">
                             <i class="fa-solid fa-pen ms-3"></i>
                         </a>
                     </td>

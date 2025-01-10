@@ -16,7 +16,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="index.php?component=restaurants&type=list">Liste</a></li>
-                        <li><a class="dropdown-item" href="index.php?component=restaurants&type=map">Vue carte</a></li>
+                        <li><a class="dropdown-item" href="index.php?component=restaurantsmap">Vue carte</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
