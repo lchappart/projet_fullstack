@@ -1,4 +1,5 @@
 export const fillTableRestaurants = (data, tableBody) => {
+    console.log(2)
     tableBody.innerHTML = ''
     for (let i = 0; i < data.length; i++) {
         const tr = document.createElement('tr')

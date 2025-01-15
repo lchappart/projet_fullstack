@@ -58,7 +58,7 @@
         </ul>
     </nav>
 </div>
-<script src= "./Assets/JS/components/restaurants.js" type="module"></script>
+<script src= "./Assets/JS/services/restaurants.js" type="module"></script>
 <script src="./Assets/JS/components/restaurants.js" type="module"></script>
 <script type="module">
     import {getRestaurants} from "./Assets/JS/services/restaurants.js"
