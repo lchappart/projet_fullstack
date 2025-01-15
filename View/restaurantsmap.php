@@ -1,3 +1,8 @@
+<div class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" id="spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
 <div class="row mt-5">
     <div class="col" id="map-container">
 
@@ -9,6 +14,7 @@
     import {getCoordinates} from "./Assets/JS/services/restaurantsmap.js";
 
     document.addEventListener('DOMContentLoaded', async () => {
+        const spinner = document.querySelector('#spinner')
         const mapContainer = document.querySelector('#map-container')
         const data = await getAllRestaurants()
         const coordinates = []
@@ -62,5 +68,6 @@
                 marker.openPopup()
             })
         }
+        spinner.classList.add('d-none')
     })
 </script>
