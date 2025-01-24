@@ -9,7 +9,11 @@
 <div class="row">
     <div class="col">
         <div class="h1 pt-2 pb-2 text-center">Créer / Modifier un restaurant</div>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input class="form-control" name="image" type="file" id="image">
+            </div>
             <div class="mb-3">
                 <label for="manager" class="form-label">Manager</label>
                 <input type="text" class="form-control" id="manager" name="manager" value="<?php  echo $restaurant['manager'] ?? ''; ?>" required>
@@ -47,7 +51,7 @@
                     <div class="col-12">
                         <div class="mb-3">
                             <label for="address" class="form-label">Adresse</label>
-                            <textarea class="form-control" id="address" name="address" required></textarea>
+                            <textarea class="form-control" id="address" name="address" required><?php echo isset($restaurant['address']) ? $restaurant['address'] : ''; ?></textarea>
                         </div>
                     </div>
                 </div>

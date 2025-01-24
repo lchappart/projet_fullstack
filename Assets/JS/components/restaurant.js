@@ -1,6 +1,7 @@
 import {getAddresses} from "../services/restaurant.js";
 
 export const addAddressListeners = (addressInput, modal) => {
+
     const searchAddressBtnElement = document.querySelector('#search-address-btn')
     const addressElement = document.querySelector('#search-address')
 
@@ -37,6 +38,7 @@ export const addAddressListeners = (addressInput, modal) => {
                 addressInput.value = clickedAddress.properties.label
                 modal.hide()
                 let map = L.map('map').setView([clickedAddressCoordinates[1], clickedAddressCoordinates[0]], 7)
+                console.log(2)
                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19,
                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

@@ -1,5 +1,9 @@
 <?php
 session_start();
+require 'config/config.php';
+require __DIR__ . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
 require 'Includes/functions.php';
 require 'Includes/database.php';
 if (isset($_GET['disconnect'])) {

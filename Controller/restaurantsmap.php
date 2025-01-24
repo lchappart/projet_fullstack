@@ -8,9 +8,20 @@ require "Model/restaurantsmap.php";
 
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
-    $restaurants = getAllRestaurants($pdo);
-    header("Content-Type: application/json");
-    echo json_encode($restaurants);
+    $action = !empty($_GET['action']) ? htmlspecialchars($_GET['action'], ENT_QUOTES) : null;
+    if ($action === 'restaurants') {
+        $restaurants = getAllRestaurants($pdo);
+        header("Content-Type: application/json");
+        echo json_encode($restaurants);
+        exit();
+    } else if ($action === 'departements') {
+        $data =  file_get_contents("Includes/departements-avec-outre-mer.geojson");
+        header("Content-Type: application/json");
+        echo $data;
+        exit();
+
+    }
+
     exit();
 }
 
