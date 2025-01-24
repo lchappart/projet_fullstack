@@ -2,8 +2,7 @@
 /**
  * @var PDO $pdo
  */
-require './Includes/database.php';
-require './vendor/autoload.php';
+require 'index.php';
 
 use GuzzleHttp\Client;
 
@@ -20,14 +19,16 @@ $faker = Faker\Factory::create('fr_FR');
 
 for ($i = 0; $i < 50; $i++){
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query="INSERT INTO sales_points (manager, siret_siren, address, opening_hours) VALUES
-(:manager, :siret_siren, :address, :opening_hours)";
+    $query="INSERT INTO `sales_points` (manager, siret_siren, address, opening_hours, group_id) VALUES
+(:manager, :siret_siren, :address, :opening_hours, :group_id)";
     $prep = $pdo->prepare($query);
     $prep->bindValue(':manager', $faker->name());
     $prep->bindValue(':siret_siren', $faker->numberBetween(11111111111111, 99999999999999));
     $prep->bindValue(':address', $data['features'][$i]['properties']['label']);
     $hours = $faker->numberBetween(8,10) ."h 00 - " . $faker->numberBetween(22,23). " h 00";
     $prep->bindValue(':opening_hours', $hours);
+    $group_id = $faker->numberBetween(1,10);
+    $prep->bindValue(':group_id', $group_id, PDO::PARAM_INT);
     try
     {
         $prep->execute();

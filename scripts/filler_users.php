@@ -2,8 +2,9 @@
 /**
  * @var PDO $pdo
  */
-require './Includes/database.php';
-require './vendor/autoload.php';
+
+require './index.php';
+
 
 
 $faker = Faker\Factory::create('fr_FR');
