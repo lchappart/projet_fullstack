@@ -1,5 +1,5 @@
-export const getRestaurants = async (currentPage) => {
-  const response = await fetch(`index.php?component=restaurants&page=${currentPage}`,{
+export const getRestaurants = async (currentPage, sortBy) => {
+  const response = await fetch(`index.php?component=restaurants&page=${currentPage}&sortBy=${sortBy}`,{
       headers: {
         'X-Requested-With': 'XMLHttpRequest'
       }

@@ -15,16 +15,17 @@
     import {getDepartementsData} from "./Assets/JS/services/restaurantsmap.js";
 
     document.addEventListener('DOMContentLoaded', async () => {
+        let customIcon
         const spinner = document.querySelector('#spinner')
         const mapContainer = document.querySelector('#map-container')
         const departementsData = await getDepartementsData()
         const data = await getAllRestaurants()
         const coordinates = []
-        for (let i = 0; i < data.length; i++) {
-            coordinates.push(await getCoordinates(data[i].address))
+        for (let i = 0; i < data.restaurants.length; i++) {
+            coordinates.push(await getCoordinates(data.restaurants[i].address))
         }
         mapContainer.innerHTML = '<div id="map"></div>'
-        let map = L.map('map').setView([48.8566, 2.3522], 6)
+        let map = L.map('map').setView([46.8566, 2.10], 6)
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -35,20 +36,6 @@
         map.invalidateSize()
         let src =''
         let geojsonLayer
-        let info = L.control()
-
-        info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info')
-            this.update();
-            return this._div;
-        }
-
-        info.update = function (props) {
-            this._div.innerHTML = '<h4>Département</h4>' +  (props ?
-                '<b>' + props
-                : 'Passez sur un département pour voir son nom');
-        }
-        info.addTo(map)
 
 
         const highlightFeature = (e) => {
@@ -58,13 +45,11 @@
                 weight: 3,
                 fillOpacity: 0.7
             })
-            info.update(layer.feature.properties.nom)
         }
 
 
         const resetHighlight = (e) => {
             geojsonLayer.resetStyle(e.target)
-            info.update()
         }
 
         function zoomToFeature(e) {
@@ -93,43 +78,55 @@
         }).addTo(map)
         for (let i = 0; i < coordinates.length; i++) {
             src = '/projet_fullstack/uploads/'
-            if (data[i].image === '')
+            if (data.restaurants[i].image === '')
             {
                 src += 'default.jpg'
             }
             else
             {
-                src += data[i].image
+                src += data.restaurants[i].image
             }
-            let marker = L.marker([coordinates[i].features[0].geometry.coordinates[1], coordinates[i].features[0].geometry.coordinates[0]]).addTo(map)
+            customIcon = L.icon({
+                iconUrl: `./Includes/Img/marker${data.restaurants[i].group_id}.png`,
+                iconSize: [38, 38],
+                iconAnchor: [16, 38],
+                popupAnchor: [0, -38]
+            });
+            let marker = L.marker([coordinates[i].features[0].geometry.coordinates[1], coordinates[i].features[0].geometry.coordinates[0]], {icon:customIcon}).addTo(map)
             marker.bindPopup(`<img src="${src}" height="100px">
                               <ol class="list-group list-group-numbered">
                               <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
                                   <div class="fw-bold">Manager</div>
-                                    ${data[i].manager}
+                                    ${data.restaurants[i].manager}
                                 </div>
                               </li>
                               <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
                                   <div class="fw-bold">Nombre Siret-Siren</div>
-                                  ${data[i].siret_siren}
+                                  ${data.restaurants[i].siret_siren}
                                 </div>
                               </li>
                               <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
                                   <div class="fw-bold">Adresse</div>
-                                  ${data[i].address}
+                                  ${data.restaurants[i].address}
                                 </div>
                               </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
                                   <div class="fw-bold">Horaires d'ouvertures</div>
-                                  ${data[i].opening_hours}
+                                  ${data.restaurants[i].opening_hours}
+                                </div>
+                              </li>
+                               <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                  <div class="fw-bold">Groupe</div>
+                                  ${data.groups[data.restaurants[i].group_id - 1].name}
                                 </div>
                               </li>
                             </ol>
-                            <a href="index.php?component=restaurant&action=edit&id=${data[i].id}">
+                            <a href="index.php?component=restaurant&action=edit&id=${data.restaurants[i].id}">
                                 <i class="fa-solid fa-pen mt-2"></i>
                             </a>
 `)

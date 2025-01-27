@@ -6,6 +6,14 @@ require 'Model/restaurant.php';
  * @var PDO $pdo
  * @var string $UPLOAD_DIRECTORY
  */
+
+if (isset($_GET['index']) && $_GET['index'] === 'groups') {
+    $restaurants = getGroups($pdo);
+    header("Content-Type: application/json");
+    echo json_encode($restaurants);
+    exit();
+}
+
 $action = 'create';
 $errors = [];
 if (!empty($_GET['id'])) {
@@ -22,16 +30,16 @@ if (isset($_POST['create_button'])) {
     $address = !empty($_POST['address']) ? cleanString($_POST['address']) : null;
     $openingHours = !empty($_POST['opening-hours']) ? cleanString($_POST['opening-hours']) : false;
     $finalName = null;
+    $group = !empty($_POST['group']) ? cleanString($_POST['group']) : null;
     if (!empty($_FILES["image"]["name"])) {
         $tmpName = $_FILES["image"]["tmp_name"];
         $fileName = $_FILES["image"]["name"];
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
         $uniqFileName = uniqid();
         $finalName = $uniqFileName . '.' . $ext;
-        var_dump($finalName);
         move_uploaded_file($tmpName, $_SERVER["DOCUMENT_ROOT"] . $UPLOAD_DIRECTORY . $finalName);
     }
-    $newRestaurant = insertRestaurant($pdo, $manager, $siretSiren, $address, $openingHours,$finalName);
+    $newRestaurant = insertRestaurant($pdo, $manager, $siretSiren, $address, $openingHours, $group, $finalName);
     if (!is_bool($newRestaurant)) {
         $errors[] = $newRestaurant;
     }
@@ -43,6 +51,7 @@ if (isset($_POST['edit_button'])) {
     $siretSiren = !empty($_POST['siret-siren']) ? cleanString($_POST['siret-siren']) : null;
     $address = !empty($_POST['address']) ? cleanString($_POST['address']) : null;
     $openingHours = !empty($_POST['opening-hours']) ? cleanString($_POST['opening-hours']) : false;
+    $group = !empty($_POST['group']) ? cleanString($_POST['group']) : null;
 
     $finalName = null;
     if (!empty($_FILES["image"]["name"])) {
@@ -56,7 +65,7 @@ if (isset($_POST['edit_button'])) {
     }
 
     if (empty($errors)) {
-        $updatedRestaurant = updateRestaurant($pdo, $manager, $siretSiren, $address, $openingHours, $id, $finalName);
+        $updatedRestaurant = updateRestaurant($pdo, $manager, $siretSiren, $address, $openingHours, $id, $group, $finalName);
         if (!is_bool($updatedRestaurant)) {
             $errors[] = $updatedRestaurant;
         } else {

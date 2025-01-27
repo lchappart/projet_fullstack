@@ -3,3 +3,13 @@ export const getAddresses = async (data) => {
 
     return await response.json()
 }
+
+export const getGroups = async () => {
+    const response = await fetch(`index.php?component=restaurant&index=groups`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    return await response.json()
+}

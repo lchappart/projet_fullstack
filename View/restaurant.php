@@ -61,6 +61,9 @@
                 <label for="opening-hours" class="form-label">Horaires d'ouverture</label>
                 <input type="text" class="form-control" id="opening-hours" name="opening-hours" value="<?php  echo $restaurant['opening_hours'] ?? ''; ?>" <?php  echo ('create' === $action) ? 'required' : ''; ?> >
             </div>
+            <select id="group-dropdown" name="group" class="form-select" aria-label="Default select example">
+                <option disabled selected>Selectionnez un groupe</option>
+            </select>
             <div class="mb-3 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary" name="<?php echo $action; ?>_button">Enregistrer</button>
             </div>
@@ -87,12 +90,21 @@
 <script type="module">
 
     import {addAddressListeners} from "./Assets/JS/components/restaurant.js";
+    import {getGroups} from "./Assets/JS/services/restaurant.js";
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         const modalElement = document.querySelector('#modal')
         const modal = new bootstrap.Modal(modalElement, {backdrop:   'static'})
         const addressInput = document.querySelector('#address')
         const mapElement = document.querySelector('#map')
+        const dropdownMenu = document.querySelector('#group-dropdown')
+        const groups = await getGroups()
+        for (let i = 0; i < groups.length; i++) {
+            const option = document.createElement('option')
+            option.value = groups[i].id
+            option.innerHTML = groups[i].name
+            dropdownMenu.appendChild(option)
+        }
         addAddressListeners(addressInput, modal, mapElement)
     })
 </script>

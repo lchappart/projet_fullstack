@@ -29,9 +29,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH
                 break;
         }
     }
-    $restaurants = getRestaurants($pdo, $page);
+
+    $sortBy = isset($_GET['sortBy']) ? cleanString($_GET['sortBy']) : 'id';
+    [$restaurants, $groups] = getRestaurants($pdo, $page, $sortBy);
     header("Content-Type: application/json");
-    echo json_encode($restaurants);
+    echo json_encode(['restaurants' => $restaurants , 'groups' => $groups]);
     exit();
 }
 require "View/restaurants.php";
