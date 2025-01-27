@@ -67,7 +67,7 @@
         fillTableUsers(data, tableBody, currentPage)
         const addToggleDeleteListeners = () => {
             const isEnabledIcons = document.querySelectorAll('.is-enabled-icon')
-            const deleteIcons = document.querySelectorAll('.delete-icon')
+            const deleteIcons = document.querySelectorAll('.delete-btn')
             for (let i = 0; i < isEnabledIcons.length; i++) {
                 isEnabledIcons[i].addEventListener('click', async (e) => {
                     e.preventDefault()
@@ -83,7 +83,6 @@
 
             for (let i = 0; i < deleteIcons.length; i++) {
                 deleteIcons[i].addEventListener('click', async (e) => {
-                    e.preventDefault()
                     const id = e.target.getAttribute('data-id')
                     const data = await deleteUser(id)
                     fillTableUsers(data, tableBody, currentPage)
@@ -112,6 +111,7 @@
             currentPageElement.innerHTML = currentPage
             tableBody.innerHTML = ''
             fillTableUsers(data, tableBody, currentPage)
+            addToggleDeleteListeners()
         })
 
         lastPageBtn.addEventListener('click', async (e) => {
@@ -121,6 +121,7 @@
             currentPageElement.innerHTML = currentPage
             const data = await getUsers(currentPage)
             fillTableUsers(data, tableBody)
+            addToggleDeleteListeners()
         })
 
         sortById.addEventListener('click', async (e) => {
@@ -129,6 +130,7 @@
             data = await getUsers(currentPage, 'id')
             tableBody.innerHTML = ''
             fillTableUsers(data, tableBody)
+            addToggleDeleteListeners()
         })
 
         sortByUsername.addEventListener('click', async (e) => {

@@ -1,24 +1,20 @@
 export const fillTableRestaurants = (data, tableBody) => {
-    console.log(2)
     tableBody.innerHTML = ''
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.restaurants.length; i++) {
         const tr = document.createElement('tr')
         tr.innerHTML = `
-                    <td>${data[i].id}</td>
-                    <td>${data[i].manager}</td>
-                    <td>${data[i].siret_siren}</td>
-                    <td>${data[i].address}</td>
-                    <td>${data[i].opening_hours}</td>
+                    <td>${data.restaurants[i].id}</td>
+                    <td>${data.restaurants[i].manager}</td>
+                    <td>${data.restaurants[i].siret_siren}</td>
+                    <td>${data.restaurants[i].address}</td>
+                    <td>${data.restaurants[i].opening_hours}</td>
+                    <td>${data.groups[data.restaurants[i].group_id - 1].name}</td>
                     <td>
-                        <a href="#"
-                               style="text-decoration: none;"
-                            >
-                            <i class="fa-solid fa-trash text-danger delete-icon" 
-                            data-id="${data[i].id}"
-                            onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?')"
+                        <button type="button" class="btn btn-primary delete-btn"><i class="fa-solid fa-trash text-danger" 
+                            data-id="${data.restaurants[i].id}"
                             ></i>
-                        </a>
-                        <a href="index.php?component=restaurant&action=edit&id=${data[i].id}">
+                            </button>
+                        <a href="index.php?component=restaurant&action=edit&id=${data.restaurants[i].id}">
                             <i class="fa-solid fa-pen ms-3"></i>
                         </a>
                     </td>
