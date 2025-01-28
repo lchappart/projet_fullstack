@@ -1,0 +1,7 @@
+{
+    "require": {
+        "fakerphp/faker": "^1.24",
+        "guzzlehttp/guzzle": "^7.0",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
