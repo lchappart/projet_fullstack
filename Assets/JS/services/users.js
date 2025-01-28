@@ -39,3 +39,23 @@ export const countUsers = async () => {
 
     return response.json()
 }
+
+export const getUsernames = async () => {
+    const response = await fetch('index.php?component=users&action=usernames', {
+        headers: {
+        'X-Requested-With' : 'XMLHttpRequest'
+        }
+    })
+
+    return response.json()
+}
+
+export const getIdByUsername = async (username) => {
+    const response = await fetch(`index.php?component=users&action=idByUsername&username=${username}`, {
+        headers: {
+        'X-Requested-With' : 'XMLHttpRequest'
+        }
+    })
+
+    return response.json()
+}

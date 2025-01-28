@@ -7,10 +7,13 @@ function getRestaurants(
 ):array | string
 {
     $offset = ($page - 1) * 15;
-    $query = 'SELECT * FROM `sales_points` ORDER BY :sortBy LIMIT 15 OFFSET :offset';
+    $allowedSortColumns = ['id', 'manager', 'address', 'siret_siren', 'opening_hours', 'group_id'];
+    if (!in_array($sortBy, $allowedSortColumns)) {
+        throw new InvalidArgumentException('Invalid sort column');
+    }
+    $query = "SELECT * FROM `sales_points` ORDER BY $sortBy LIMIT 15 OFFSET :offset";
     $res = $pdo->prepare($query);
     $res->bindParam(':offset', $offset, PDO::PARAM_INT);
-    $res->bindParam(':sortBy', $sortBy, PDO::PARAM_STR);
     try {
         $res->execute();
     } catch (Exception $e) {

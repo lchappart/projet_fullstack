@@ -9,6 +9,7 @@
         }
         if (is_array($user) && password_verify($pass, $user['password'])) {
             $_SESSION['auth'] = true;
+            $_SESSION['username'] = $user['username'];
             header('Content-Type: application/json');
             echo json_encode(['authentication' => true]);
             exit();
