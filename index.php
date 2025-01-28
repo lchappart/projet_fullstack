@@ -35,7 +35,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH
     <link rel="stylesheet" href="./Includes/font_awesome/css/solid.css"/>
     <link rel="stylesheet" href="./Includes/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./Includes/leaflet/leaflet.css">
-    <script src="./Includes/leaflet/leaflet.js"></script>
+    <link rel="stylesheet" href="./Includes/autoComplete/dist/css/autoComplete.css">
 </head>
 <body>
     <div class="container">
@@ -54,6 +54,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH
         require '_partials/errors.php';
         ?>
     </div>
+    <script src="./Includes/leaflet/leaflet.js"></script>
     <script src="./Includes/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script src="./Includes/autoComplete/dist/autoComplete.min.js"></script>
 </body>

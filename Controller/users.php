@@ -8,11 +8,25 @@ require "Model/users.php";
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
     $page = isset($_GET['page']) ? (int)cleanString($_GET['page']) : 1;
     isset($_GET['sortby']) && $_GET['sortby'] != null ? $sortBy = cleanString($_GET['sortby']) : $sortBy = 'id';
-    if (isset($_GET['action']) && $_GET['action'] === 'count') {
-        $count = countUsers($pdo);
-        header("Content-Type: application/json");
-        echo json_encode($count);
-        exit();
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'count':
+                $count = countUsers($pdo);
+                header("Content-Type: application/json");
+                echo json_encode($count);
+                exit();
+            case 'usernames':
+                $usernames = getUsernames($pdo);
+                header("Content-Type: application/json");
+                echo json_encode($usernames);
+                exit();
+            case 'idByUsername':
+                $username = cleanString($_GET['username']);
+                $id = getIdByUsername($pdo, $username);
+                header("Content-Type: application/json");
+                echo json_encode($id);
+                exit();
+        }
     }
     if (
         isset($_GET['action']) &&

@@ -7,6 +7,9 @@
 <div class="mt-5 mb-5">
     <h1 class="text-center">Liste des utilisateurs :</h1>
 </div>
+<div class="autoComplete_wrapper mb-5 mt-5 d-block align-content-center">
+    <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
+</div>
 <a href="index.php?component=user&action=create">
     <button type="button" class="btn btn-primary">+ Créer un utlisateur</button>
 </a>
@@ -50,6 +53,8 @@
     import {fillTableUsers} from "./Assets/JS/components/users.js"
     import {deleteUser} from "./Assets/JS/services/users.js"
     import {countUsers} from "./Assets/JS/services/users.js";
+    import {getUsernames} from "./Assets/JS/services/users.js";
+    import {getIdByUsername} from "./Assets/JS/services/users.js";
 
     document.addEventListener('DOMContentLoaded', async () => {
         let currentPage = 1
@@ -63,7 +68,21 @@
         const currentPageElement = document.querySelector('#current-page')
         const sortById = document.querySelector('#sort-by-id')
         const sortByUsername = document.querySelector('#sort-by-username')
-        let data = await getUsers(currentPage)
+        let data = await getUsers(currentPage,sortBy)
+        const usernames = getUsernames()
+        const autoCompleteJS = new autoComplete({
+            selector: '#autoComplete',
+            placeHolder: "Recherchez...",
+            data: {
+                src: usernames,
+                keys : ['username'],
+            },
+        })
+        autoCompleteJS.input.addEventListener('selection', async (e) => {
+            const username = e.detail.selection.value.username
+            const userId = await getIdByUsername(username)
+            window.location.href = 'index.php?component=user&action=edit&id=' + userId[0]
+        })
         fillTableUsers(data, tableBody, currentPage)
         const addToggleDeleteListeners = () => {
             const isEnabledIcons = document.querySelectorAll('.is-enabled-icon')
@@ -145,7 +164,7 @@
                 currentPage = 1
             }
             tableBody.innerHTML = ''
-            const data = await getUsers(currentPage)
+            const data = await getUsers(currentPage, sortBy)
             currentPageElement.innerHTML = currentPage
             fillTableUsers(data, tableBody, currentPage)
             addToggleDeleteListeners()
