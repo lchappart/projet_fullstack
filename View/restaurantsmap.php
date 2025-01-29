@@ -37,6 +37,11 @@
         let src =''
         let geojsonLayer
 
+        let markers = L.markerClusterGroup({
+            spiderfyOnMaxZoom: false,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: false
+        });
 
         const highlightFeature = (e) => {
             const layer = e.target
@@ -92,7 +97,7 @@
                 iconAnchor: [16, 38],
                 popupAnchor: [0, -38]
             });
-            let marker = L.marker([coordinates[i].features[0].geometry.coordinates[1], coordinates[i].features[0].geometry.coordinates[0]], {icon:customIcon}).addTo(map)
+            let marker = L.marker([coordinates[i].features[0].geometry.coordinates[1], coordinates[i].features[0].geometry.coordinates[0]], {icon:customIcon})
             marker.bindPopup(`<img src="${src}" height="100px">
                               <ol class="list-group list-group-numbered">
                               <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -133,8 +138,9 @@
             marker.addEventListener('click', (e) => {
                 marker.openPopup()
             })
+            markers.addLayer(marker)
         }
-
+        map.addLayer(markers)
         spinner.classList.add('d-none')
     })
 </script>

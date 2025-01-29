@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-<script type="module" src="Assets/services/login.js"></script>
+<script type="module" src="Assets/JS/services/login.js"></script>
 <script type="module">
     import {login} from "./Assets/JS/services/login.js";
     document.addEventListener("DOMContentLoaded",  () => {
