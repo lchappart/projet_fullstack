@@ -7,6 +7,9 @@
 <div class="mt-5 mb-5">
     <h1 class="text-center">Liste des restaurants :</h1>
 </div>
+<div class="autoComplete_wrapper mb-5 mt-5 d-block align-content-center">
+    <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
+</div>
 <a href="index.php?component=restaurant&action=create">
     <button type="button" class="btn btn-primary">+ Créer un restaurant</button>
 </a>
@@ -99,6 +102,29 @@
                 })
             }
         }
+
+        const autoCompleteJS = new autoComplete({
+            selector: '#autoComplete',
+            placeHolder: "Recherchez...",
+            data: {
+                src: async (query) => {
+                    const response = await fetch(
+                        `index.php?component=restaurants&action=search&query=${query}`,
+                        {
+                            headers: {
+                                'X-Requested-With' : 'XMLHttpRequest'
+                            }
+                        }
+                    )
+                    return await response.json()
+                },
+                keys: ['manager', 'id', 'siret_siren', 'address', 'opening_hours'],
+            },
+        })
+        autoCompleteJS.input.addEventListener('selection', async (e) => {
+            const id = e.detail.selection.value.id
+            window.location.href = 'index.php?component=restaurant&action=edit&id=' + id
+        })
 
         sortById.addEventListener('click', async (e) => {
             e.preventDefault()
