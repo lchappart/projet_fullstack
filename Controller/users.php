@@ -16,7 +16,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH
                 echo json_encode($count);
                 exit();
             case 'usernames':
-                $usernames = getUsernames($pdo);
+                $query = cleanString($_GET['query']);
+                $usernames = getUsernames($pdo, $query);
                 header("Content-Type: application/json");
                 echo json_encode($usernames);
                 exit();

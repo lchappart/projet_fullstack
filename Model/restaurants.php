@@ -62,3 +62,14 @@ function toggleEnabled(PDO $pdo, int $id): void
     $res->bindParam(':id', $id, PDO::PARAM_INT);
     $res->execute();
 }
+
+function search (PDO $pdo, string $query): array | string{
+    $sql = "SELECT * FROM `sales_points` WHERE manager LIKE :query OR address LIKE :query OR siret_siren LIKE :query OR opening_hours LIKE :query";
+    $res = $pdo->prepare($sql);
+    $res->bindValue(':query', "%$query%");
+    $res->execute();
+    return $res->fetchAll();
+}
+{
+
+}

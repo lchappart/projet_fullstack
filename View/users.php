@@ -53,7 +53,6 @@
     import {fillTableUsers} from "./Assets/JS/components/users.js"
     import {deleteUser} from "./Assets/JS/services/users.js"
     import {countUsers} from "./Assets/JS/services/users.js";
-    import {getUsernames} from "./Assets/JS/services/users.js";
     import {getIdByUsername} from "./Assets/JS/services/users.js";
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -69,12 +68,21 @@
         const sortById = document.querySelector('#sort-by-id')
         const sortByUsername = document.querySelector('#sort-by-username')
         let data = await getUsers(currentPage,sortBy)
-        const usernames = getUsernames()
         const autoCompleteJS = new autoComplete({
             selector: '#autoComplete',
             placeHolder: "Recherchez...",
             data: {
-                src: usernames,
+                src: async (query) => {
+                    const response = await fetch(
+                        `index.php?component=users&action=usernames&query=${query}`,
+                        {
+                            headers: {
+                                'X-Requested-With' : 'XMLHttpRequest'
+                            }
+                        }
+                    )
+                    return await response.json()
+                },
                 keys : ['username'],
             },
         })

@@ -7,11 +7,21 @@ require "Model/restaurants.php";
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
     $page = isset($_GET['page']) ? (int)cleanString($_GET['page']) : 1;
-    if (isset($_GET['action']) && $_GET['action'] === 'count') {
-        $count = countRestaurants($pdo);
-        header("Content-Type: application/json");
-        echo json_encode($count);
-        exit();
+    if (isset($_GET['action'])) {
+        $action = cleanString($_GET['action']);
+        switch ($action) {
+            case 'count':
+                $totalRestaurants = countRestaurants($pdo);
+                header("Content-Type: application/json");
+                echo json_encode($totalRestaurants);
+                exit();
+            case 'search':
+                $query = cleanString($_GET['query']);
+                $restaurants = search($pdo, $query);
+                header("Content-Type: application/json");
+                echo json_encode($restaurants);
+                exit();
+        }
     }
     if (
         isset($_GET['action']) &&

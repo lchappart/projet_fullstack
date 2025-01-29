@@ -51,10 +51,11 @@ function countUsers(PDO $pdo) {
     return $res->fetch();
 }
 
-function getUsernames(PDO $pdo): array | string{
-    $query = 'SELECT username FROM `users`';
+function getUsernames(PDO $pdo, string $query): array | string {
+    $sql = 'SELECT username FROM `users` WHERE username LIKE :query';
     try {
-        $res = $pdo->prepare($query);
+        $res = $pdo->prepare($sql);
+        $res->bindValue(':query', "%$query%");
         $res->execute();
     } catch (Exception $e) {
         return $e->getMessage();
