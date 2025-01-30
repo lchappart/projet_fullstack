@@ -12,7 +12,7 @@
         <form method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input class="form-control" name="image" type="file" id="image">
+                <input required class="form-control" name="image" type="file" id="image">
             </div>
             <div class="mb-3">
                 <label for="manager" class="form-label">Manager</label>
@@ -61,8 +61,8 @@
                 <label for="opening-hours" class="form-label">Horaires d'ouverture</label>
                 <input type="text" class="form-control" id="opening-hours" name="opening-hours" value="<?php  echo $restaurant['opening_hours'] ?? ''; ?>" <?php  echo ('create' === $action) ? 'required' : ''; ?> >
             </div>
-            <select id="group-dropdown" name="group" class="form-select" aria-label="Default select example">
-                <option disabled selected>Selectionnez un groupe</option>
+            <select id="group-dropdown" name="group" class="form-select" data-group="<?php echo $restaurant['group_id'] ?? '' ?>" aria-label="Default select example" required>
+                <option disabled value="" <?php echo ($action === 'create') ? 'selected' : '';?> >Selectionnez un groupe</option>
             </select>
             <div class="mb-3 d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary" name="<?php echo $action; ?>_button">Enregistrer</button>
@@ -98,11 +98,15 @@
         const addressInput = document.querySelector('#address')
         const mapElement = document.querySelector('#map')
         const dropdownMenu = document.querySelector('#group-dropdown')
+        const groupId = dropdownMenu.getAttribute('data-group')
         const groups = await getGroups()
         for (let i = 0; i < groups.length; i++) {
             const option = document.createElement('option')
             option.value = groups[i].id
             option.innerHTML = groups[i].name
+            if (groups[i].id == groupId) {
+                option.selected = true
+            }
             dropdownMenu.appendChild(option)
         }
         addAddressListeners(addressInput, modal, mapElement)

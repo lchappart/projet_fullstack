@@ -75,10 +75,6 @@
                     mouseout: resetHighlight,
                     click: zoomToFeature
                 })
-                layer.addEventListener('click', (e) => {
-                    marker
-                })
-
             }
         }).addTo(map)
         for (let i = 0; i < coordinates.length; i++) {
