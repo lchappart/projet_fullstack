@@ -95,6 +95,7 @@
         const addToggleDeleteListeners = () => {
             const isEnabledIcons = document.querySelectorAll('.is-enabled-icon')
             const deleteIcons = document.querySelectorAll('.delete-btn')
+            console.log(deleteIcons)
             for (let i = 0; i < isEnabledIcons.length; i++) {
                 isEnabledIcons[i].addEventListener('click', async (e) => {
                     e.preventDefault()
@@ -107,14 +108,17 @@
                     e.target.classList.toggle('text-danger')
                 })
             }
-
+            let count = 0
             for (let i = 0; i < deleteIcons.length; i++) {
+                count++
                 deleteIcons[i].addEventListener('click', async (e) => {
                     const id = e.target.getAttribute('data-id')
                     const data = await deleteUser(id)
                     fillTableUsers(data, tableBody, currentPage)
+                    addToggleDeleteListeners()
                 })
             }
+            console.log(count)
         }
 
         addToggleDeleteListeners()
@@ -123,13 +127,17 @@
         lastPageBtn.innerHTML = Math.ceil(totalUsers[0] / 15)
 
         previousPage.addEventListener('click',  (e) => {
-            e.preventDefault()
-            updatePagination(-1)
+            if (currentPage !== 1) {
+                e.preventDefault()
+                updatePagination(-1)
+            }
         })
 
         nextPage.addEventListener('click',  (e) => {
-            e.preventDefault()
-            updatePagination(1)
+            if (currentPage !== Math.ceil(totalUsers[0] / [15])) {
+                e.preventDefault()
+                updatePagination(1)
+            }
         })
 
         firstPageBtn.addEventListener('click',  (e) => {
@@ -146,7 +154,7 @@
             currentPage = Math.ceil(totalUsers[0] / 15)
             tableBody.innerHTML = ''
             currentPageElement.innerHTML = currentPage
-            const data = await getUsers(currentPage)
+            const data = await getUsers(currentPage, sortBy)
             fillTableUsers(data, tableBody)
             addToggleDeleteListeners()
         })

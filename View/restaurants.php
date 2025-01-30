@@ -91,14 +91,17 @@
         const lastPageBtn = document.querySelector('#last-page-btn')
         const currentPageElement = document.querySelector('#current-page')
         let data = await getRestaurants(currentPage, sortBy)
-        fillTableRestaurants(data, tableBody)
+        await fillTableRestaurants(data, tableBody)
         const addToggleDeleteListeners = () => {
             const deleteIcons = document.querySelectorAll('.delete-btn')
             for (let i = 0; i < deleteIcons.length; i++) {
+                console.log(deleteIcons[i])
                 deleteIcons[i].addEventListener('click', async (e) => {
+                    e.preventDefault()
                     const id = e.target.getAttribute('data-id')
                     const data = await deleteRestaurant(id)
                     fillTableRestaurants(data, tableBody)
+                    addToggleDeleteListeners()
                 })
             }
         }
@@ -186,13 +189,17 @@
         lastPageBtn.innerHTML = Math.ceil(totalRestaurants[0] / 15)
 
         previousPage.addEventListener('click',  (e) => {
-            e.preventDefault()
-            updatePagination(-1)
+            if (currentPage !== 1) {
+                e.preventDefault()
+                updatePagination(-1)
+            }
         })
 
         nextPage.addEventListener('click',  (e) => {
-            e.preventDefault()
-            updatePagination(1)
+            if (currentPage !== Math.ceil(totalRestaurants[0] / 15)) {
+                e.preventDefault()
+                updatePagination(1)
+            }
         })
 
         firstPageBtn.addEventListener('click', async(e) => {
