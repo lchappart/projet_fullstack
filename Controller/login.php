@@ -7,12 +7,14 @@
         if (empty($user)) {
             $errors = ["Nom d'utilisateur ou mot de passe incorrect"];
         }
-        if (is_array($user) && password_verify($pass, $user['password'])) {
+        if (is_array($user) && $user['enabled'] !== 0 && password_verify($pass, $user['password'])) {
             $_SESSION['auth'] = true;
             $_SESSION['username'] = $user['username'];
             header('Content-Type: application/json');
             echo json_encode(['authentication' => true]);
             exit();
+        } elseif ($user['enabled'] === 0 ) {
+            $errors[] = 'Votre compte est désactivé';
         } else {
             $errors[] = 'L\'identification a échoué';
         }

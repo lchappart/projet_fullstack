@@ -68,7 +68,7 @@ for ($i = 0; $i <= 105; $i++){
 (:username, :password, :enabled)";
     $prep = $pdo->prepare($query);
     $prep->bindValue(':username', $faker->userName());
-    $prep->bindValue(':password', password_hash(0000, PDO::PARAM_STR));
+    $prep->bindValue(':password', password_hash('0000', PDO::PARAM_STR));
     $prep->bindValue(':enabled', $faker->numberBetween(0,1), PDO::PARAM_INT);
     try
     {

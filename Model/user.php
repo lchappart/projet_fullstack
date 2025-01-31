@@ -27,6 +27,15 @@ function insertUser(
     bool $enabled
 ): bool | string
 {
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $query="SELECT id FROM `users` WHERE username=:username";
+    $prep = $pdo->prepare($query);
+    $prep->bindValue(':username', $username);
+    $prep->execute();
+    $res = $prep->fetchAll();
+    if (count($res) > 0) {
+        return 'Le username est déja utilisé';
+    }
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $query="INSERT INTO users (username, password, enabled) VALUES (:username, :password, :enabled)";
