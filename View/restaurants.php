@@ -95,7 +95,6 @@
         const addToggleDeleteListeners = () => {
             const deleteIcons = document.querySelectorAll('.delete-btn')
             for (let i = 0; i < deleteIcons.length; i++) {
-                console.log(deleteIcons[i])
                 deleteIcons[i].addEventListener('click', async (e) => {
                     e.preventDefault()
                     const id = e.target.getAttribute('data-id')
