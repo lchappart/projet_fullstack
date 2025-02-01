@@ -48,8 +48,8 @@ $query="INSERT INTO users (username, password, enabled) VALUES
 (:username, :password, :enabled)";
 $prep = $pdo->prepare($query);
 $prep->bindValue(':username', 'admin');
-$prep->bindValue(':password', password_hash('admin', PDO::PARAM_STR));
-$prep->bindValue(':enabled', 1 , PDO::PARAM_INT);
+$prep->bindValue(':password', password_hash('admin', PDO::PARAM_STR
+$prep->bindValue(':enabled', 1, PDO::PARAM_INT);
 try
 {
     $prep->execute();
